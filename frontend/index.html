@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestión de Pilotos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Formula+1&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Gestión de Pilotos</h1>
+
+        <form id="driverForm">
+            <input type="hidden" id="driverId">
+
+            <label for="firstName">Nombre:</label>
+            <input type="text" id="firstName" required>
+
+            <label for="lastName">Apellido:</label>
+            <input type="text" id="lastName" required>
+
+            <label for="nationality">Nacionalidad:</label>
+            <input type="text" id="nationality" required>
+
+            <label for="team">Equipo:</label>
+            <input type="text" id="team">
+
+            <label for="championshipsWon">Campeonatos Ganados:</label>
+            <input type="number" id="championshipsWon" min="0" value="0">
+
+            <button type="submit" id="submitBtn">
+                Crear Piloto
+            </button>
+        </form>
+
+        <h2>Lista de Pilotos</h2>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Nacionalidad</th>
+                        <th>Equipo</th>
+                        <th>Campeonatos</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="driversTable">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
