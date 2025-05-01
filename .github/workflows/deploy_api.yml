@@ -1,0 +1,40 @@
+name: Deploy postgresql-api
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  deploy-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Create .env file with Aiven connection
+        run: |
+          echo "PORT=8080" >> .env
+          echo "UPLOAD_PATH=./uploads" >> .env
+          echo "DATABASE_URL=postgres://${{ secrets.AIVEN_POSTGRES_USER }}:${{ secrets.AIVEN_POSTGRES_PASSWORD }}@${{ secrets.AIVEN_POSTGRES_HOST }}:${{ secrets.AIVEN_POSTGRES_PORT }}/${{ secrets.AIVEN_POSTGRES_DATABASE }}?sslmode=require" >> .env
+          echo "PG_SSL=true" >> .env
+          echo "PG_SSL_CA=./ca.pem" >> .env # <-- Asegúrate de tener ca.pem en la raíz
+          cat .env
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_USER }}/postgresql-restapi:${{ github.sha }} .
+
+      - name: Docker images
+        run: docker images
+
+      - name: Docker login to Docker Hub
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+      - name: Push Docker image to Docker Hub
+        run: docker push ${{ secrets.DOCKER_USER }}/postgresql-restapi:${{ github.sha }}
