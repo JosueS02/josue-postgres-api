@@ -17,7 +17,7 @@ jobs:
 
       - name: Create .env file with Aiven connection
         run: |
-          echo "PORT=8080" >> .env
+          echo "PORT=8081" >> .env
           echo "UPLOAD_PATH=./uploads" >> .env
           echo "PG_HOST=${{ secrets.AIVEN_POSTGRES_HOST  }}" >> .env
           echo "PG_USER=${{ secrets.AIVEN_POSTGRES_USER }}" >> .env
