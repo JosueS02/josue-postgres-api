@@ -19,9 +19,13 @@ jobs:
         run: |
           echo "PORT=8080" >> .env
           echo "UPLOAD_PATH=./uploads" >> .env
-          echo "DATABASE_URL=postgres://${{ secrets.AIVEN_POSTGRES_USER }}:${{ secrets.AIVEN_POSTGRES_PASSWORD }}@${{ secrets.AIVEN_POSTGRES_HOST }}:${{ secrets.AIVEN_POSTGRES_PORT }}/${{ secrets.AIVEN_POSTGRES_DATABASE }}?sslmode=require" >> .env
+          echo "POSTGRES_HOST=${{ secrets.AIVEN_POSTGRES_HOST  }}" >> .env
+          echo "POSTGRES_USER=${{ secrets.AIVEN_POSTGRES_USER }}" >> .env
+          echo "POSTGRES_PASSWORD=${{ secrets.AIVEN_POSTGRES_PASSWORD }}" >> .env
+          echo "POSTGRES_DATABASE=defaultdb" >> .env
+          echo "POSTGRES_PORT=14234" >> .env
           echo "PG_SSL=true" >> .env
-          echo "PG_SSL_CA=./ca.pem" >> .env # <-- Asegúrate de tener ca.pem en la raíz
+          echo "PG_SSL_CA=./ca.pem" >> .env
           cat .env
 
       - name: Build Docker image
